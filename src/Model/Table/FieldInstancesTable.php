@@ -45,10 +45,12 @@ class FieldInstancesTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->addBehavior('Serializable', [
-            'columns' => ['settings', 'view_modes']
-        ]);
-
+        if (class_exists('CMS\\Model\\Behavior\\SerializableBehavior')) {
+            $this->addBehavior('CMS.Serializable', [
+                'columns' => ['settings', 'view_modes']
+            ]);
+        }
+        
         $this->belongsTo('EavAttribute', [
             'className' => 'Eav.EavAttributes',
             'foreignKey' => 'eav_attribute_id',
